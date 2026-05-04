@@ -14,7 +14,6 @@ export function renderMarkdown(value = '') {
              .replace(/^# (.*)$/gm, '<h2>$1</h2>')
              .replace(/`([^`]+)`/g, '<code>$1</code>')
              .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-             .replace(/
-/g, '<br>');
+             .replace(/\n/g, '<br>');
   return html;
 }

@@ -1,5 +1,5 @@
-import { api } from './api.js';
-import { state, toast, setBoard } from './state.js';
+import { api } from './api.js?v=20260505-2';
+import { state, toast, setBoard } from './state.js?v=20260505-2';
 
 export function setupForms(load) {
   document.getElementById('quickCreateForm').addEventListener('submit', async ev => {

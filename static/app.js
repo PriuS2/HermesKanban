@@ -1,10 +1,10 @@
-import { api } from './api.js';
-import { applyI18n, lang, setLang } from './i18n.js';
-import { renderBoard, renderKpis } from './board.js';
-import { setupForms } from './forms.js';
-import { setupMobileFallback } from './mobile.js';
-import { closeDrawer } from './drawer.js';
-import { state, setBoard, toast } from './state.js';
+import { api } from './api.js?v=20260505-2';
+import { applyI18n, lang, setLang } from './i18n.js?v=20260505-2';
+import { renderBoard, renderKpis } from './board.js?v=20260505-2';
+import { setupForms } from './forms.js?v=20260505-2';
+import { setupMobileFallback } from './mobile.js?v=20260505-2';
+import { closeDrawer } from './drawer.js?v=20260505-2';
+import { state, setBoard, toast } from './state.js?v=20260505-2';
 
 async function loadBoards() {
   const data = await api.boards();
