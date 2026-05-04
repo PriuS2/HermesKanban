@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hermes KanbanWebUI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/design-tokens.css" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">H</div>
+        <div>
+          <h1>Hermes Kanban</h1>
+          <p data-i18n="subtitle">읽기 쉬운 작업 운영 보드</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <select id="boardSelect" aria-label="board"></select>
+        <button class="button ghost" id="newBoardBtn" data-i18n="newBoard">보드 추가</button>
+        <button class="button ghost" id="refreshBtn" data-i18n="refresh">새로고침</button>
+        <button class="button" id="langToggle">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-card">
+        <div>
+          <p class="eyebrow">KanbanWebUI · 127.0.0.1:8790</p>
+          <h2 id="boardTitle">Default</h2>
+          <p id="boardDescription" class="muted">Hermes CLI와 같은 DB를 사용하는 전용 칸반 WebUI</p>
+        </div>
+        <div class="health-panel">
+          <span id="healthDot" class="dot"></span>
+          <div>
+            <strong id="healthText">loading</strong>
+            <small id="dbPath"></small>
+          </div>
+        </div>
+      </section>
+
+      <section class="toolbar" aria-label="filters">
+        <form id="quickCreateForm" class="quick-create">
+          <input id="quickTitle" name="title" autocomplete="off" data-i18n-placeholder="quickTitle" placeholder="작업 제목을 입력하고 Enter" />
+          <input id="quickAssignee" name="assignee" autocomplete="off" data-i18n-placeholder="assignee" placeholder="담당자" />
+          <select id="quickStatus" name="status">
+            <option value="ready">ready</option>
+            <option value="todo">todo</option>
+            <option value="triage">triage</option>
+          </select>
+          <button class="button primary" data-i18n="create">추가</button>
+        </form>
+        <div class="filters">
+          <input id="searchInput" data-i18n-placeholder="search" placeholder="검색" />
+          <select id="assigneeFilter"><option value="" data-i18n="allAssignees">전체 담당자</option></select>
+          <label class="check"><input id="archivedToggle" type="checkbox" /> <span data-i18n="showArchived">보관함 표시</span></label>
+          <button class="button ghost" id="bulkBtn" data-i18n="bulkCreate">일괄 추가</button>
+        </div>
+      </section>
+
+      <section id="kpiRow" class="kpi-row" aria-label="board stats"></section>
+      <section id="board" class="board" aria-label="kanban board"></section>
+    </main>
+  </div>
+
+  <aside id="drawer" class="drawer" aria-hidden="true"></aside>
+  <div id="overlay" class="overlay" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="boardDialog" class="modal">
+    <form id="boardForm" method="dialog">
+      <h3 data-i18n="newBoard">보드 추가</h3>
+      <input name="slug" placeholder="project-slug" required />
+      <input name="name" data-i18n-placeholder="boardName" placeholder="보드 이름" />
+      <textarea name="description" data-i18n-placeholder="description" placeholder="설명"></textarea>
+      <div class="modal-actions">
+        <button class="button ghost" value="cancel" data-i18n="cancel">취소</button>
+        <button class="button primary" value="default" data-i18n="create">추가</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="bulkDialog" class="modal">
+    <form id="bulkForm" method="dialog">
+      <h3 data-i18n="bulkCreate">일괄 추가</h3>
+      <p class="muted" data-i18n="bulkHint">한 줄에 작업 하나씩 입력하세요.</p>
+      <textarea name="lines" rows="10" placeholder="Task one
+Task two"></textarea>
+      <div class="modal-actions">
+        <button class="button ghost" value="cancel" data-i18n="cancel">취소</button>
+        <button class="button primary" value="default" data-i18n="create">추가</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

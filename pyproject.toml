@@ -1,0 +1,20 @@
+[project]
+name = "hermes-kanban-webui"
+version = "0.1.0"
+description = "Standalone Trello-like WebUI for Hermes Kanban"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pydantic",
+]
+
+[project.optional-dependencies]
+test = ["pytest", "httpx"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
