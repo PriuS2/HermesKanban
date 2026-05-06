@@ -29,6 +29,35 @@ def test_static_javascript_parses():
         subprocess.run([node, '--check', str(path)], check=True, cwd=root)
 
 
+def test_dark_mode_static_contract():
+    root = Path(__file__).resolve().parents[1]
+    index = (root / 'static' / 'index.html').read_text(encoding='utf-8')
+    app = (root / 'static' / 'app.js').read_text(encoding='utf-8')
+    theme = (root / 'static' / 'theme.js').read_text(encoding='utf-8')
+    i18n = (root / 'static' / 'i18n.js').read_text(encoding='utf-8')
+    tokens = (root / 'static' / 'design-tokens.css').read_text(encoding='utf-8')
+    style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
+
+    assert 'id="themeToggle"' in index
+    assert 'aria-pressed="false"' in index
+    assert 'style.css?v=20260505-10' in index
+    assert 'app.js?v=20260505-10' in index
+    assert './theme.js?v=20260505-10' in app
+    assert 'setupThemeToggle' in app
+    assert 'updateThemeToggleLabel' in app
+    assert 'kanbanTheme' in theme
+    assert 'prefers-color-scheme: dark' in theme
+    assert 'document.documentElement.dataset.theme' in theme
+    assert 'localStorage.setItem(THEME_STORAGE_KEY' in theme
+    assert 'themeDark' in i18n
+    assert 'themeLight' in i18n
+    assert ':root[data-theme="dark"]' in tokens
+    assert 'color-scheme: dark' in tokens
+    for token in ['--body-background', '--control-bg', '--card-bg', '--column-header-bg', '--edge-stroke']:
+        assert token in tokens
+        assert f'var({token})' in style
+
+
 def test_dragdrop_pointer_contract_strings():
     root = Path(__file__).resolve().parents[1]
     dragdrop = (root / 'static' / 'dragdrop.js').read_text(encoding='utf-8')
@@ -64,8 +93,8 @@ def test_button_hover_keeps_ghost_text_readable():
     style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
 
     assert '.button.primary, .button:hover' not in style
-    assert '.button.ghost { background: rgba(255,255,255,0.72); color: var(--ink); }' in style
-    assert '.button.ghost:hover { background: rgba(23,23,23,.06); color: var(--ink); border-color: var(--border); }' in style
+    assert '.button.ghost { background: var(--ghost-bg); color: var(--ink); }' in style
+    assert '.button.ghost:hover { background: var(--ghost-hover-bg); color: var(--ink); border-color: var(--border); }' in style
     assert '.button.ghost.danger-btn:hover' in style
 
 

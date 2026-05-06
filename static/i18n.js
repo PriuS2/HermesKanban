@@ -1,6 +1,6 @@
 export const labels = {
   ko: {
-    subtitle: '읽기 쉬운 작업 운영 보드', newBoard: '보드 추가', refresh: '새로고침', quickTitle: '작업 제목을 입력하고 Enter',
+    subtitle: '읽기 쉬운 작업 운영 보드', newBoard: '보드 추가', refresh: '새로고침', themeDark: '다크로 전환', themeLight: '라이트로 전환', quickTitle: '작업 제목을 입력하고 Enter',
     assignee: '담당 프로필', create: '추가', search: '작업 제목/내용/ID 검색', allAssignees: '전체 담당자', unassigned: '미지정', agentProfile: '프로필', manualAssignee: '수동', showArchived: '보관함 표시',
     bulkCreate: '일괄 추가', boardName: '보드 이름', description: '설명', cancel: '취소', bulkHint: '한 줄에 작업 하나씩 입력하세요.',
     triage: '분류', todo: '대기', ready: '준비', running: '실행중', blocked: '막힘', done: '완료', archived: '보관',
@@ -13,7 +13,7 @@ export const labels = {
     complete: '완료', block: '막기', unblock: '해제', archive: '보관', save: '저장', close: '닫기', addComment: '댓글 추가', empty: '없음'
   },
   en: {
-    subtitle: 'Readable operations board', newBoard: 'New board', refresh: 'Refresh', quickTitle: 'Type a task title and press Enter',
+    subtitle: 'Readable operations board', newBoard: 'New board', refresh: 'Refresh', themeDark: 'Switch dark', themeLight: 'Switch light', quickTitle: 'Type a task title and press Enter',
     assignee: 'Agent profile', create: 'Create', search: 'Search title/body/ID', allAssignees: 'All assignees', unassigned: 'Unassigned', agentProfile: 'profile', manualAssignee: 'manual', showArchived: 'Show archived',
     bulkCreate: 'Bulk create', boardName: 'Board name', description: 'Description', cancel: 'Cancel', bulkHint: 'One task per line.',
     triage: 'Triage', todo: 'Todo', ready: 'Ready', running: 'Running', blocked: 'Blocked', done: 'Done', archived: 'Archived',

@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/design-tokens.css?v=20260505-7" />
-  <link rel="stylesheet" href="/static/style.css?v=20260505-8" />
+  <link rel="stylesheet" href="/static/design-tokens.css?v=20260505-10" />
+  <link rel="stylesheet" href="/static/style.css?v=20260505-10" />
 </head>
 <body>
   <div class="app-shell">
@@ -24,6 +24,7 @@
         <select id="boardSelect" aria-label="board"></select>
         <button class="button ghost" id="newBoardBtn" data-i18n="newBoard">보드 추가</button>
         <button class="button ghost" id="refreshBtn" data-i18n="refresh">새로고침</button>
+        <button class="button ghost theme-toggle" id="themeToggle" type="button" aria-pressed="false">🌙 다크</button>
         <button class="button" id="langToggle">EN</button>
       </div>
     </header>
@@ -104,6 +105,6 @@ Task two"></textarea>
     </form>
   </dialog>
 
-  <script type="module" src="/static/app.js?v=20260505-9"></script>
+  <script type="module" src="/static/app.js?v=20260505-10"></script>
 </body>
 </html>

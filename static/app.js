@@ -1,11 +1,12 @@
-import { api } from './api.js?v=20260505-9';
-import { applyI18n, lang, setLang, t } from './i18n.js?v=20260505-9';
-import { renderBoard, renderKpis } from './board.js?v=20260505-9';
-import { setupDependencyControls } from './dependency-lines.js?v=20260505-9';
-import { setupForms } from './forms.js?v=20260505-9';
-import { setupMobileFallback } from './mobile.js?v=20260505-9';
-import { closeDrawer } from './drawer.js?v=20260505-9';
-import { state, setBoard, toast } from './state.js?v=20260505-9';
+import { api } from './api.js?v=20260505-10';
+import { applyI18n, lang, setLang, t } from './i18n.js?v=20260505-10';
+import { setupThemeToggle, updateThemeToggleLabel } from './theme.js?v=20260505-10';
+import { renderBoard, renderKpis } from './board.js?v=20260505-10';
+import { setupDependencyControls } from './dependency-lines.js?v=20260505-10';
+import { setupForms } from './forms.js?v=20260505-10';
+import { setupMobileFallback } from './mobile.js?v=20260505-10';
+import { closeDrawer } from './drawer.js?v=20260505-10';
+import { state, setBoard, toast } from './state.js?v=20260505-10';
 
 async function loadBoards() {
   const data = await api.boards();
@@ -93,7 +94,7 @@ export async function load() {
 
 function setupControls() {
   document.getElementById('refreshBtn').addEventListener('click', load);
-  document.getElementById('langToggle').addEventListener('click', () => { setLang(lang() === 'ko' ? 'en' : 'ko'); load(); });
+  document.getElementById('langToggle').addEventListener('click', () => { setLang(lang() === 'ko' ? 'en' : 'ko'); updateThemeToggleLabel(); load(); });
   document.getElementById('boardSelect').addEventListener('change', async ev => {
     setBoard(ev.target.value);
     await api.switchBoard(state.board);
@@ -124,6 +125,7 @@ async function pollEvents() {
 
 async function main() {
   applyI18n();
+  setupThemeToggle();
   setupControls();
   setupDependencyControls();
   setupForms(load);
