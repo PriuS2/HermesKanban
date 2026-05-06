@@ -45,7 +45,7 @@
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --column-width: 318px;
+  --column-min-width: 260px;
 }
 
 :root[data-theme="dark"] {

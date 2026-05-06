@@ -1,4 +1,4 @@
-import { state } from './state.js?v=20260506-02';
+import { state } from './state.js?v=20260506-03';
 
 const VIEW_MODES = new Set(['focus', 'all', 'blocked', 'off']);
 let currentData = null;

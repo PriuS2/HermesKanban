@@ -40,9 +40,9 @@ def test_dark_mode_static_contract():
 
     assert 'id="themeToggle"' in index
     assert 'aria-pressed="false"' in index
-    assert 'style.css?v=20260506-02' in index
-    assert 'app.js?v=20260506-02' in index
-    assert './theme.js?v=20260506-02' in app
+    assert 'style.css?v=20260506-03' in index
+    assert 'app.js?v=20260506-03' in index
+    assert './theme.js?v=20260506-03' in app
     assert 'setupThemeToggle' in app
     assert 'updateThemeToggleLabel' in app
     assert 'kanbanTheme' in theme
@@ -178,11 +178,27 @@ def test_workflow_static_contract():
         assert css_class in style
 
 
+def test_board_columns_fill_available_resolution_width():
+    root = Path(__file__).resolve().parents[1]
+    style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
+    board = (root / 'static' / 'board.js').read_text(encoding='utf-8')
+    tokens = (root / 'static' / 'design-tokens.css').read_text(encoding='utf-8')
+
+    assert '--column-min-width:' in tokens
+    assert '--kanban-column-count' in board
+    assert "root.style.setProperty('--kanban-column-count'" in board
+    assert '.board { position: relative; display: grid;' in style
+    assert 'grid-template-columns: repeat(var(--kanban-column-count, 6), minmax(var(--column-min-width), 1fr));' in style
+    assert 'width: var(--column-width)' not in style
+    assert 'min-width: var(--column-width)' not in style
+    assert '.board-column { position: relative; min-width: 0;' in style
+
+
 def test_dependency_lines_render_above_column_backgrounds_below_cards():
     root = Path(__file__).resolve().parents[1]
     style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
 
-    assert '.board-column { position: relative; width: var(--column-width);' in style
+    assert '.board-column { position: relative; min-width: 0;' in style
     assert '.board-column { position: relative; z-index: 1;' not in style
     assert '.cards { position: relative; z-index: 2;' in style
     assert '.task-card { position: relative;' in style

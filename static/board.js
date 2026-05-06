@@ -1,8 +1,8 @@
-import { t } from './i18n.js?v=20260506-02';
-import { escapeHtml } from './markdown.js?v=20260506-02';
-import { openTaskDrawer } from './drawer.js?v=20260506-02';
-import { attachDragHandlers } from './dragdrop.js?v=20260506-02';
-import { clearDependencyFocus, focusDependencyTask, renderDependencyOverlay, selectDependencyTask } from './dependency-lines.js?v=20260506-02';
+import { t } from './i18n.js?v=20260506-03';
+import { escapeHtml } from './markdown.js?v=20260506-03';
+import { openTaskDrawer } from './drawer.js?v=20260506-03';
+import { attachDragHandlers } from './dragdrop.js?v=20260506-03';
+import { clearDependencyFocus, focusDependencyTask, renderDependencyOverlay, selectDependencyTask } from './dependency-lines.js?v=20260506-03';
 
 function card(task) {
   const chips = [task.assignee ? `@${task.assignee}` : 'unassigned', task.tenant, task.priority ? `P${task.priority}` : null].filter(Boolean);
@@ -29,7 +29,9 @@ export function renderKpis(data) {
 
 export function renderBoard(data) {
   const root = document.getElementById('board');
-  root.innerHTML = data.column_order.map(status => {
+  const statuses = data.column_order || [];
+  root.style.setProperty('--kanban-column-count', String(Math.max(1, statuses.length)));
+  root.innerHTML = statuses.map(status => {
     const tasks = data.columns[status] || [];
     return `<section class="board-column" data-status="${status}">
       <header><div><h2>${t(status)}</h2><small>${tasks.length}</small></div><button class="mini-add" data-status="${status}">＋</button></header>
