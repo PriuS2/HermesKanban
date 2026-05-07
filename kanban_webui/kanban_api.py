@@ -22,7 +22,7 @@ from .serializers import comment_dict, event_dict, links_for, run_dict, task_dic
 from .service_status import service_status
 from .ui_registry import registry
 from .config import get_settings
-from . import workflow_drafts, workflow_planner, workflows
+from . import app_update, workflow_drafts, workflow_planner, workflows
 
 router = APIRouter(prefix="/api")
 
@@ -658,6 +658,21 @@ def get_config() -> dict[str, Any]:
 @router.get("/service/status")
 def get_service_status() -> dict[str, Any]:
     return service_status()
+
+
+@router.get("/app/update-status")
+def get_app_update_status() -> dict[str, Any]:
+    return app_update.get_update_status()
+
+
+@router.post("/app/update")
+def update_app() -> dict[str, Any]:
+    try:
+        return app_update.apply_update()
+    except app_update.UpdateBlocked as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except app_update.UpdateUnavailable as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 @router.post("/init")

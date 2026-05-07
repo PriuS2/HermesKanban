@@ -146,6 +146,15 @@ textarea { width: 100%; resize: vertical; }
 .modal form { display: grid; gap: 12px; }
 .modal::backdrop { background: var(--modal-backdrop-bg); }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.button:disabled { opacity: .55; cursor: not-allowed; }
+.update-modal { width: min(560px, 94vw); }
+.update-status { margin: 8px 0 12px; }
+.update-meta { display: flex; align-items: center; gap: 10px; margin: 12px 0; color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.update-meta span { border: 1px solid var(--hairline); border-radius: 999px; padding: 5px 9px; background: var(--surface-strong); color: var(--ink); }
+.update-commit-list { list-style: none; margin: 8px 0 14px; padding: 0; display: grid; gap: 8px; max-height: 220px; overflow: auto; }
+.update-commit-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 9px 10px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--surface-strong); }
+.update-commit-list code { color: var(--link); font-family: var(--font-mono); font-size: 12px; }
+.update-commit-list span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dialog-label { display: grid; gap: 6px; color: var(--muted); font-weight: 700; }
 .dialog-label input, .dialog-label select, .dialog-label textarea { width: 100%; }
 .task-modal { width: min(620px, 94vw); }

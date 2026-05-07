@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/design-tokens.css?v=20260507-01" />
-  <link rel="stylesheet" href="/static/style.css?v=20260507-01" />
+  <link rel="stylesheet" href="/static/design-tokens.css?v=20260507-02" />
+  <link rel="stylesheet" href="/static/style.css?v=20260507-02" />
 </head>
 <body>
   <div class="app-shell">
@@ -143,6 +143,24 @@ Task two"></textarea>
     </form>
   </dialog>
 
-  <script type="module" src="/static/app.js?v=20260507-01"></script>
+  <dialog id="updateDialog" class="modal update-modal">
+    <form method="dialog">
+      <p class="eyebrow" data-i18n="updateAvailable">새 업데이트 사용 가능</p>
+      <h3 data-i18n="updateTitle">KanbanWebUI 업데이트</h3>
+      <p id="updateStatusMessage" class="muted update-status" data-i18n="updateChecking">업데이트 상태 확인 중…</p>
+      <div class="update-meta">
+        <span data-update-current>local</span>
+        <strong>→</strong>
+        <span data-update-remote>origin/main</span>
+      </div>
+      <ul id="updateCommitList" class="update-commit-list"></ul>
+      <div class="modal-actions">
+        <button class="button ghost" type="button" data-update-later data-i18n="updateLater">나중에</button>
+        <button class="button primary" type="button" data-update-apply data-i18n="updateApply">업데이트 후 재시작</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/static/app.js?v=20260507-02"></script>
 </body>
 </html>

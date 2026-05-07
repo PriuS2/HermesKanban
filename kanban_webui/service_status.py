@@ -7,6 +7,7 @@ import subprocess
 import time
 from pathlib import Path
 
+from . import app_update
 from .config import get_settings
 from .hermes_imports import kanban_db
 
@@ -51,4 +52,5 @@ def service_status() -> dict:
         "db_exists": Path(db_path).exists(),
         "hermes_home": str(kanban_db.kanban_home()),
         "gateway": _gateway_hint(),
+        "git": app_update.local_git_info(),
     }

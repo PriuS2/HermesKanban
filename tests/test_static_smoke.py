@@ -16,8 +16,50 @@ def test_static_shell_contains_required_ui_contracts(client):
     assert '/static/app.js' in index
 
     root = Path(__file__).resolve().parents[1]
-    for rel in ['static/app.js', 'static/board.js', 'static/drawer.js', 'static/monitor.js', 'static/i18n.js', 'static/design-tokens.css', 'DESIGN.md']:
+    for rel in ['static/app.js', 'static/board.js', 'static/drawer.js', 'static/monitor.js', 'static/i18n.js', 'static/update.js', 'static/design-tokens.css', 'DESIGN.md']:
         assert (root / rel).is_file(), rel
+
+
+def test_app_update_static_contract():
+    root = Path(__file__).resolve().parents[1]
+    index = (root / 'static' / 'index.html').read_text(encoding='utf-8')
+    app = (root / 'static' / 'app.js').read_text(encoding='utf-8')
+    api = (root / 'static' / 'api.js').read_text(encoding='utf-8')
+    update = (root / 'static' / 'update.js').read_text(encoding='utf-8')
+    i18n = (root / 'static' / 'i18n.js').read_text(encoding='utf-8')
+    style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
+
+    for phrase in [
+        'id="updateDialog"',
+        'id="updateCommitList"',
+        'id="updateStatusMessage"',
+        'data-update-current',
+        'data-update-remote',
+        'data-update-later',
+        'data-update-apply',
+    ]:
+        assert phrase in index
+
+    assert './update.js?v=20260507-02' in app
+    assert 'setupAppUpdatePrompt' in app
+    for phrase in ['appUpdateStatus', '/api/app/update-status', 'applyAppUpdate', '/api/app/update']:
+        assert phrase in api
+    for phrase in [
+        'setupAppUpdatePrompt',
+        'kanbanDismissedUpdateCommit',
+        'api.appUpdateStatus',
+        'api.applyAppUpdate',
+        'pollHealthUntilReady',
+        'location.reload()',
+        'updateCommitList',
+        'updateDialog',
+        '300000',
+    ]:
+        assert phrase in update
+    for key in ['updateAvailable', 'updateApply', 'updateLater', 'updateChecking', 'updateRestarting', 'updateBlocked', 'updateNoCommits']:
+        assert key in i18n
+    for css_class in ['.update-modal', '.update-commit-list', '.update-status']:
+        assert css_class in style
 
 
 def test_static_javascript_parses():
@@ -40,9 +82,9 @@ def test_dark_mode_static_contract():
 
     assert 'id="themeToggle"' in index
     assert 'aria-pressed="false"' in index
-    assert 'style.css?v=20260507-01' in index
-    assert 'app.js?v=20260507-01' in index
-    assert './theme.js?v=20260507-01' in app
+    assert 'style.css?v=20260507-02' in index
+    assert 'app.js?v=20260507-02' in index
+    assert './theme.js?v=20260507-02' in app
     assert 'setupThemeToggle' in app
     assert 'updateThemeToggleLabel' in app
     assert 'kanbanTheme' in theme
