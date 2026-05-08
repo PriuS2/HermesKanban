@@ -51,12 +51,15 @@ textarea { width: 100%; resize: vertical; }
 .mini-add, .icon-button { border: none; background: var(--surface-strong); color: var(--ink); border-radius: 999px; width: 32px; height: 32px; cursor: pointer; }
 .cards { position: relative; z-index: 2; display: grid; gap: 10px; }
 .task-card { position: relative; background: var(--card-bg); border: 1px solid var(--hairline); border-radius: 18px; padding: 14px; cursor: grab; box-shadow: var(--card-shadow); transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease; }
+.task-card.is-unassigned { border-color: var(--warning); box-shadow: 0 0 0 1px var(--warning-ring), var(--card-shadow); }
+.task-card.is-unassigned::after { content: ""; position: absolute; inset: 0; z-index: 0; border-radius: 18px; pointer-events: none; background: linear-gradient(135deg, var(--warning-soft), transparent 42%); }
+.task-card > :not(.dependency-port) { position: relative; z-index: 1; }
 .task-card:hover, .task-card:focus { transform: translateY(-2px); box-shadow: var(--card-hover-shadow); outline: none; }
 .task-card.drag-ghost { opacity: .45; }
 .task-card.pointer-drag-ready { outline: 2px solid var(--link); }
 .dependency-port { position: absolute; top: 50%; z-index: 3; width: 22px; height: 22px; transform: translateY(-50%); display: grid; place-items: center; border: 2px solid var(--primary); border-radius: 999px; background: var(--surface-strong); color: var(--ink); cursor: crosshair; box-shadow: 0 8px 20px rgba(23,23,23,.16); transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background-color .14s ease; }
-.dependency-port.child-port { left: -11px; border-color: #16a34a; }
-.dependency-port.parent-port { right: -11px; border-color: #2563eb; }
+.dependency-port.child-port { right: -11px; border-color: #16a34a; }
+.dependency-port.parent-port { left: -11px; border-color: #2563eb; }
 .dependency-port span { position: absolute; top: -26px; min-width: max-content; opacity: 0; pointer-events: none; border: 1px solid var(--hairline); border-radius: 999px; padding: 3px 7px; background: var(--surface-strong); color: var(--ink); font-size: 11px; font-weight: 800; box-shadow: 0 8px 18px rgba(23,23,23,.12); }
 .task-card:hover .dependency-port span, .dependency-port:focus-visible span, .dependency-port.is-link-source span, .dependency-port.is-link-target span { opacity: 1; }
 .dependency-port:hover, .dependency-port:focus-visible, .dependency-port.is-link-source, .dependency-port.is-link-target { transform: translateY(-50%) scale(1.15); outline: none; box-shadow: 0 0 0 5px rgba(13,116,206,.12), 0 12px 26px rgba(23,23,23,.20); }
@@ -73,6 +76,8 @@ textarea { width: 100%; resize: vertical; }
 .task-card p { color: var(--muted); font-size: 13px; line-height: 1.35; }
 .chips { justify-content: flex-start; flex-wrap: wrap; margin-top: 10px; }
 .chips span, .status { border: 1px solid var(--hairline); border-radius: 999px; padding: 4px 8px; background: var(--chip-bg); font-size: 12px; color: var(--muted); }
+.profile-missing-badge, .chips .missing-assignee-chip { border-color: var(--warning); background: var(--warning-soft); color: var(--warning); font-weight: 900; }
+.profile-missing-badge { margin-left: auto; margin-right: 4px; border: 1px solid var(--warning); border-radius: 999px; padding: 3px 7px; font-size: 11px; line-height: 1; white-space: nowrap; }
 .card-foot { margin-top: 10px; color: var(--faint); font-size: 12px; }
 .relation-badge { color: var(--ink); font-weight: 800; letter-spacing: .02em; }
 .dependency-overlay { position: absolute; left: 0; top: 0; z-index: 1; pointer-events: none; overflow: visible; }

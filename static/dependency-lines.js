@@ -1,6 +1,6 @@
-import { api } from './api.js?v=20260507-01';
-import { t } from './i18n.js?v=20260507-01';
-import { state, toast } from './state.js?v=20260507-01';
+import { api } from './api.js?v=20260508-01';
+import { t } from './i18n.js?v=20260508-01';
+import { state, toast } from './state.js?v=20260508-01';
 
 const VIEW_MODES = new Set(['focus', 'all', 'blocked', 'off']);
 let currentData = null;
@@ -141,10 +141,11 @@ function cardPoint(board, card, side, offset = 0) {
 }
 
 function pathFor(board, parentCard, childCard, ports = { sourceOffset: 0, targetOffset: 0 }) {
-  const from = cardPoint(board, parentCard, 'right', ports.sourceOffset);
-  const to = cardPoint(board, childCard, 'left', ports.targetOffset);
+  const from = cardPoint(board, parentCard, 'left', ports.sourceOffset);
+  const to = cardPoint(board, childCard, 'right', ports.targetOffset);
   const dx = Math.max(54, Math.abs(to.x - from.x) * 0.42);
-  return `M ${from.x.toFixed(1)} ${from.y.toFixed(1)} C ${(from.x + dx).toFixed(1)} ${from.y.toFixed(1)}, ${(to.x - dx).toFixed(1)} ${to.y.toFixed(1)}, ${to.x.toFixed(1)} ${to.y.toFixed(1)}`;
+  const direction = to.x >= from.x ? 1 : -1;
+  return `M ${from.x.toFixed(1)} ${from.y.toFixed(1)} C ${(from.x + direction * dx).toFixed(1)} ${from.y.toFixed(1)}, ${(to.x - direction * dx).toFixed(1)} ${to.y.toFixed(1)}, ${to.x.toFixed(1)} ${to.y.toFixed(1)}`;
 }
 
 function portFromElement(el) {
@@ -176,7 +177,7 @@ function pointForPort(board, port) {
   if (!port) return null;
   const card = port.el.closest('.task-card[data-task-id]') || visibleCards(board).get(port.taskId);
   if (!card) return null;
-  return cardPoint(board, card, port.role === 'parent' ? 'right' : 'left');
+  return cardPoint(board, card, port.role === 'parent' ? 'left' : 'right');
 }
 
 function clientPoint(board, clientX, clientY) {

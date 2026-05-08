@@ -40,7 +40,7 @@ def test_app_update_static_contract():
     ]:
         assert phrase in index
 
-    assert './update.js?v=20260507-02' in app
+    assert './update.js?v=20260508-01' in app
     assert 'setupAppUpdatePrompt' in app
     for phrase in ['appUpdateStatus', '/api/app/update-status', 'applyAppUpdate', '/api/app/update']:
         assert phrase in api
@@ -82,9 +82,9 @@ def test_dark_mode_static_contract():
 
     assert 'id="themeToggle"' in index
     assert 'aria-pressed="false"' in index
-    assert 'style.css?v=20260507-02' in index
-    assert 'app.js?v=20260507-02' in index
-    assert './theme.js?v=20260507-02' in app
+    assert 'style.css?v=20260508-01' in index
+    assert 'app.js?v=20260508-01' in index
+    assert './theme.js?v=20260508-01' in app
     assert 'setupThemeToggle' in app
     assert 'updateThemeToggleLabel' in app
     assert 'kanbanTheme' in theme
@@ -207,6 +207,34 @@ def test_task_create_options_live_in_modal_not_toolbar():
     for css_class in ['.toolbar-actions', '.task-field-grid', '.task-modal']:
         assert css_class in style
 
+
+
+def test_unassigned_tasks_are_visually_flagged():
+    root = Path(__file__).resolve().parents[1]
+    app = (root / 'static' / 'app.js').read_text(encoding='utf-8')
+    board = (root / 'static' / 'board.js').read_text(encoding='utf-8')
+    i18n = (root / 'static' / 'i18n.js').read_text(encoding='utf-8')
+    style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
+    tokens = (root / 'static' / 'design-tokens.css').read_text(encoding='utf-8')
+
+    for phrase in [
+        'const isUnassigned = !task.assignee;',
+        'profileMissing',
+        'profileMissingShort',
+        'missing-assignee-chip',
+        'profile-missing-badge',
+        "data-assignee-state=\"${isUnassigned ? 'missing' : 'assigned'}\"",
+        "task.status}${isUnassigned ? ' is-unassigned' : ''}",
+    ]:
+        assert phrase in board
+    for key in ['profileMissing', 'profileMissingShort']:
+        assert key in i18n
+    for css_class in ['.task-card.is-unassigned', '.profile-missing-badge', '.chips .missing-assignee-chip']:
+        assert css_class in style
+    assert './board.js?v=20260508-01' in app
+    assert './i18n.js?v=20260508-01' in board
+    for token in ['--warning-soft', '--warning-ring']:
+        assert token in tokens
 
 
 def test_workflow_static_contract():
@@ -338,14 +366,16 @@ def test_blueprint_dependency_ports_create_links_from_board():
         'relationFromPorts',
         'api.linkTask(state.board',
         'dependency-preview-edge',
-        "cardPoint(board, parentCard, 'right'",
-        "cardPoint(board, childCard, 'left'",
+        "cardPoint(board, parentCard, 'left'",
+        "cardPoint(board, childCard, 'right'",
+        'const direction = to.x >= from.x ? 1 : -1;',
+        'from.x + direction * dx',
     ]:
         assert phrase in lines
 
     assert "ev.target.closest('.dependency-port')" in dragdrop
-    assert '.dependency-port.child-port { left:' in style
-    assert '.dependency-port.parent-port { right:' in style
+    assert '.dependency-port.child-port { right:' in style
+    assert '.dependency-port.parent-port { left:' in style
     assert '.board.is-linking' in style
     assert '.dependency-preview-edge' in style
     for key in ['parentPortHint', 'childPortHint', 'linkCreatedToast', 'linkInvalidToast']:

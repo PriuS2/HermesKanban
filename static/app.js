@@ -1,13 +1,13 @@
-import { api } from './api.js?v=20260507-02';
-import { applyI18n, lang, setLang, t } from './i18n.js?v=20260507-02';
-import { setupThemeToggle, updateThemeToggleLabel } from './theme.js?v=20260507-02';
-import { renderBoard, renderKpis } from './board.js?v=20260507-02';
-import { setupDependencyControls } from './dependency-lines.js?v=20260507-02';
-import { setupForms } from './forms.js?v=20260507-02';
-import { setupMobileFallback } from './mobile.js?v=20260507-02';
-import { setupAppUpdatePrompt } from './update.js?v=20260507-02';
-import { closeDrawer } from './drawer.js?v=20260507-02';
-import { state, setBoard, toast } from './state.js?v=20260507-02';
+import { api } from './api.js?v=20260508-01';
+import { applyI18n, lang, setLang, t } from './i18n.js?v=20260508-01';
+import { setupThemeToggle, updateThemeToggleLabel } from './theme.js?v=20260508-01';
+import { renderBoard, renderKpis } from './board.js?v=20260508-01';
+import { setupDependencyControls } from './dependency-lines.js?v=20260508-01';
+import { setupForms } from './forms.js?v=20260508-01';
+import { setupMobileFallback } from './mobile.js?v=20260508-01';
+import { setupAppUpdatePrompt } from './update.js?v=20260508-01';
+import { closeDrawer } from './drawer.js?v=20260508-01';
+import { state, setBoard, toast } from './state.js?v=20260508-01';
 
 async function loadBoards() {
   const data = await api.boards();

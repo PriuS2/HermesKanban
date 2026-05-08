@@ -1,11 +1,16 @@
-import { t } from './i18n.js?v=20260507-01';
-import { escapeHtml } from './markdown.js?v=20260507-01';
-import { openTaskDrawer } from './drawer.js?v=20260507-01';
-import { attachDragHandlers } from './dragdrop.js?v=20260507-01';
-import { clearDependencyFocus, focusDependencyTask, renderDependencyOverlay, selectDependencyTask } from './dependency-lines.js?v=20260507-01';
+import { t } from './i18n.js?v=20260508-01';
+import { escapeHtml } from './markdown.js?v=20260508-01';
+import { openTaskDrawer } from './drawer.js?v=20260508-01';
+import { attachDragHandlers } from './dragdrop.js?v=20260508-01';
+import { clearDependencyFocus, focusDependencyTask, renderDependencyOverlay, selectDependencyTask } from './dependency-lines.js?v=20260508-01';
 
 function card(task) {
-  const chips = [task.assignee ? `@${task.assignee}` : 'unassigned', task.tenant, task.priority ? `P${task.priority}` : null].filter(Boolean);
+  const isUnassigned = !task.assignee;
+  const assigneeHint = escapeHtml(t('profileMissing'));
+  const assigneeChip = task.assignee
+    ? `<span>@${escapeHtml(task.assignee)}</span>`
+    : `<span class="missing-assignee-chip" title="${assigneeHint}">⚠ ${assigneeHint}</span>`;
+  const chips = [task.tenant, task.priority ? `P${task.priority}` : null].filter(Boolean);
   const parents = Number(task.link_counts?.parents || 0);
   const children = Number(task.link_counts?.children || 0);
   const progress = task.progress ? `<span>${task.progress.done}/${task.progress.total}</span>` : '';
@@ -15,13 +20,13 @@ function card(task) {
   const taskId = escapeHtml(task.id);
   const childPortHint = escapeHtml(t('childPortHint'));
   const parentPortHint = escapeHtml(t('parentPortHint'));
-  return `<article class="task-card ${task.status}" data-task-id="${taskId}" data-parent-count="${parents}" data-child-count="${children}" tabindex="0">
+  return `<article class="task-card ${task.status}${isUnassigned ? ' is-unassigned' : ''}" data-task-id="${taskId}" data-parent-count="${parents}" data-child-count="${children}" data-assignee-state="${isUnassigned ? 'missing' : 'assigned'}" tabindex="0">
     <button type="button" class="dependency-port child-port" data-link-role="child" data-link-task-id="${taskId}" title="${childPortHint}" aria-label="${childPortHint}"><span>${escapeHtml(t('child'))}</span></button>
     <button type="button" class="dependency-port parent-port" data-link-role="parent" data-link-task-id="${taskId}" title="${parentPortHint}" aria-label="${parentPortHint}"><span>${escapeHtml(t('parent'))}</span></button>
-    <div class="card-top"><code>${taskId}</code><span class="status-dot ${task.status}"></span></div>
+    <div class="card-top"><code>${taskId}</code>${isUnassigned ? `<span class="profile-missing-badge" title="${assigneeHint}" aria-label="${assigneeHint}">⚠ ${escapeHtml(t('profileMissingShort'))}</span>` : ''}<span class="status-dot ${task.status}"></span></div>
     <h3>${escapeHtml(task.title)}</h3>
     ${task.body_preview ? `<p>${escapeHtml(task.body_preview)}</p>` : ''}
-    <div class="chips">${chips.map(x => `<span>${escapeHtml(x)}</span>`).join('')}${progress}${workflow}</div>
+    <div class="chips">${assigneeChip}${chips.map(x => `<span>${escapeHtml(x)}</span>`).join('')}${progress}${workflow}</div>
     <div class="card-foot"><span>💬 ${task.comment_count || 0}</span><span class="relation-badge" title="parents ${parents} · children ${children}">↑ ${parents} ↓ ${children}</span>${task.status === 'running' ? '<strong>LIVE</strong>' : ''}</div>
   </article>`;
 }

@@ -17,6 +17,8 @@
   --link: #0d74ce;
   --success: #0a7f42;
   --warning: #b65c00;
+  --warning-soft: rgba(182, 92, 0, 0.14);
+  --warning-ring: rgba(182, 92, 0, 0.28);
   --danger: #c92a2a;
   --blocked: #fff2e5;
   --running: #e8f2ff;
@@ -65,6 +67,8 @@
   --link: #67e8f9;
   --success: #4ade80;
   --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.16);
+  --warning-ring: rgba(251, 191, 36, 0.34);
   --danger: #f87171;
   --blocked: rgba(251, 146, 60, 0.16);
   --running: rgba(59, 130, 246, 0.18);
