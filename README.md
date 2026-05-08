@@ -57,6 +57,8 @@ Kanban data:
 - Task detail drawer with editable metadata/body, comments, events, runs,
   markdown rendering, dependency controls, home-channel notification toggles,
   and a Live Run Monitor for running tasks.
+- Global Operations panel for running tasks, heartbeat/claim health, retry
+  candidates, blocked-after-retry failures, and recent failure events.
 - Dependency visualization on the board and task drawer, including focus/all/
   blocked/off display modes, so parent/child relationships are visible without
   leaving the browser.
@@ -288,6 +290,7 @@ The old built-in workflow template API is deprecated and returns `410 Gone`; pro
 - `POST /api/init`
 - `GET/POST/PATCH/DELETE /api/boards...`
 - `GET /api/board`
+- `GET /api/ops/summary` for read-only board-level operations/retry visibility.
 - `POST /api/tasks`
 - `POST /api/tasks/bulk-create`
 - `PATCH /api/tasks/{task_id}`
@@ -307,6 +310,10 @@ The old built-in workflow template API is deprecated and returns `410 Gone`; pro
 - `POST /api/dispatch` (`dry_run=true` by default; non-dry-run requires
   `confirm=dispatch`)
 - `POST /api/gc` requires `confirm=gc`
+
+Retry backoff shown in the Operations panel is an advisory estimate derived
+from current failure metadata; dispatcher-level backoff enforcement is a
+separate Hermes core enhancement.
 
 ## Tests
 

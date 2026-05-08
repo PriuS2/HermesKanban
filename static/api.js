@@ -37,6 +37,7 @@ export const api = {
   appUpdateStatus: () => request('/api/app/update-status'),
   applyAppUpdate: () => request('/api/app/update', { method: 'POST' }),
   config: () => request('/api/config'),
+  opsSummary: (board, recentLimit = 20) => request(`/api/ops/summary?${boardQuery(board, { recent_limit: recentLimit })}`),
   boards: () => request('/api/boards'),
   createBoard: payload => request('/api/boards', { method: 'POST', body: payload }),
   switchBoard: slug => request(`/api/boards/${encodeURIComponent(slug)}/switch`, { method: 'POST' }),

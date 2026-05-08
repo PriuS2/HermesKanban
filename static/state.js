@@ -9,6 +9,8 @@ export const state = {
   selectedTaskId: null,
   dependencyView: localStorage.getItem('dependencyView') || 'focus',
   workflowDraft: null,
+  opsOpen: localStorage.getItem('kanbanOpsPanelOpen') === '1',
+  opsData: null,
   refreshTimer: null
 };
 

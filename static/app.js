@@ -1,13 +1,14 @@
-import { api } from './api.js?v=20260508-01';
-import { applyI18n, lang, setLang, t } from './i18n.js?v=20260508-01';
-import { setupThemeToggle, updateThemeToggleLabel } from './theme.js?v=20260508-01';
-import { renderBoard, renderKpis } from './board.js?v=20260508-01';
-import { setupDependencyControls } from './dependency-lines.js?v=20260508-01';
-import { setupForms } from './forms.js?v=20260508-01';
-import { setupMobileFallback } from './mobile.js?v=20260508-01';
-import { setupAppUpdatePrompt } from './update.js?v=20260508-01';
-import { closeDrawer } from './drawer.js?v=20260508-01';
-import { state, setBoard, toast } from './state.js?v=20260508-01';
+import { api } from './api.js?v=20260508-02';
+import { applyI18n, lang, setLang, t } from './i18n.js?v=20260508-02';
+import { setupThemeToggle, updateThemeToggleLabel } from './theme.js?v=20260508-02';
+import { renderBoard, renderKpis } from './board.js?v=20260508-02';
+import { setupDependencyControls } from './dependency-lines.js?v=20260508-02';
+import { setupForms } from './forms.js?v=20260508-02';
+import { setupMobileFallback } from './mobile.js?v=20260508-02';
+import { setupAppUpdatePrompt } from './update.js?v=20260508-02';
+import { setupOperationsPanel, refreshOperationsPanel } from './operations.js?v=20260508-02';
+import { closeDrawer } from './drawer.js?v=20260508-02';
+import { state, setBoard, toast } from './state.js?v=20260508-02';
 
 async function loadBoards() {
   const data = await api.boards();
@@ -90,6 +91,7 @@ export async function load() {
   document.getElementById('boardDescription').textContent = data.board_meta.description || 'Hermes CLI와 같은 DB를 사용하는 전용 칸반 WebUI';
   renderKpis(data);
   renderBoard(data);
+  await refreshOperationsPanel();
   await loadStatus();
 }
 
@@ -134,6 +136,7 @@ async function main() {
   setupForms(load);
   setupMobileFallback();
   setupAppUpdatePrompt();
+  setupOperationsPanel();
   const storedAssignee = localStorage.getItem('lastAssignee') || '';
   const taskAssignee = document.getElementById('taskAssignee');
   if (taskAssignee) taskAssignee.value = storedAssignee;

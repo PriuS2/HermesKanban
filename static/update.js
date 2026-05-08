@@ -1,5 +1,5 @@
-import { api } from './api.js?v=20260508-01';
-import { t } from './i18n.js?v=20260508-01';
+import { api } from './api.js?v=20260508-02';
+import { t } from './i18n.js?v=20260508-02';
 
 const DISMISSED_UPDATE_KEY = 'kanbanDismissedUpdateCommit';
 let latestStatus = null;

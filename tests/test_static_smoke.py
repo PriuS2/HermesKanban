@@ -40,7 +40,7 @@ def test_app_update_static_contract():
     ]:
         assert phrase in index
 
-    assert './update.js?v=20260508-01' in app
+    assert './update.js?v=20260508-02' in app
     assert 'setupAppUpdatePrompt' in app
     for phrase in ['appUpdateStatus', '/api/app/update-status', 'applyAppUpdate', '/api/app/update']:
         assert phrase in api
@@ -82,9 +82,9 @@ def test_dark_mode_static_contract():
 
     assert 'id="themeToggle"' in index
     assert 'aria-pressed="false"' in index
-    assert 'style.css?v=20260508-01' in index
-    assert 'app.js?v=20260508-01' in index
-    assert './theme.js?v=20260508-01' in app
+    assert 'style.css?v=20260508-02' in index
+    assert 'app.js?v=20260508-02' in index
+    assert './theme.js?v=20260508-02' in app
     assert 'setupThemeToggle' in app
     assert 'updateThemeToggleLabel' in app
     assert 'kanbanTheme' in theme
@@ -231,10 +231,32 @@ def test_unassigned_tasks_are_visually_flagged():
         assert key in i18n
     for css_class in ['.task-card.is-unassigned', '.profile-missing-badge', '.chips .missing-assignee-chip']:
         assert css_class in style
-    assert './board.js?v=20260508-01' in app
-    assert './i18n.js?v=20260508-01' in board
+    assert './board.js?v=20260508-02' in app
+    assert './i18n.js?v=20260508-02' in board
     for token in ['--warning-soft', '--warning-ring']:
         assert token in tokens
+
+
+def test_operations_dashboard_static_contract():
+    root = Path(__file__).resolve().parents[1]
+    index = (root / 'static' / 'index.html').read_text(encoding='utf-8')
+    app = (root / 'static' / 'app.js').read_text(encoding='utf-8')
+    api = (root / 'static' / 'api.js').read_text(encoding='utf-8')
+    ops = (root / 'static' / 'operations.js').read_text(encoding='utf-8')
+    i18n = (root / 'static' / 'i18n.js').read_text(encoding='utf-8')
+    style = (root / 'static' / 'style.css').read_text(encoding='utf-8')
+
+    for phrase in ['id="opsToggleBtn"', 'id="opsPanel"']:
+        assert phrase in index
+    assert './operations.js?v=20260508-02' in app
+    for phrase in ['opsSummary', '/api/ops/summary']:
+        assert phrase in api
+    for phrase in ['renderOperationsPanel', 'setupOperationsPanel', 'retry_queue', 'blocked_after_retries', 'openTaskDrawer']:
+        assert phrase in ops
+    for key in ['operations', 'opsOverview', 'opsRunning', 'opsRetryQueue', 'opsBlockedAfterRetries', 'opsEstimatedBackoffAdvisory']:
+        assert key in i18n
+    for css_class in ['.ops-panel', '.ops-grid', '.ops-table', '.ops-chip']:
+        assert css_class in style
 
 
 def test_workflow_static_contract():

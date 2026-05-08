@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ -n "${HERMES_REAL_HOME:-}" ]]; then
+  ENV_REAL_HOME="$HERMES_REAL_HOME"
+elif [[ -n "${USER:-}" && -d "/home/$USER" ]]; then
+  ENV_REAL_HOME="/home/$USER"
+else
+  ENV_REAL_HOME="${HOME:?HOME is not set}"
+fi
+ENV_FILE="${HERMES_KANBAN_WEBUI_ENV:-$ENV_REAL_HOME/.hermes/kanban-webui.env}"
+if [[ -f "$ENV_FILE" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$ENV_FILE"
+  set +a
+fi
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 DEFAULT_APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 if [[ ! -f "$DEFAULT_APP_DIR/server.py" ]]; then

@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/design-tokens.css?v=20260508-01" />
-  <link rel="stylesheet" href="/static/style.css?v=20260508-01" />
+  <link rel="stylesheet" href="/static/design-tokens.css?v=20260508-02" />
+  <link rel="stylesheet" href="/static/style.css?v=20260508-02" />
 </head>
 <body>
   <div class="app-shell">
@@ -58,6 +58,7 @@
           <label class="check"><input id="archivedToggle" type="checkbox" /> <span data-i18n="showArchived">보관함 표시</span></label>
         </div>
         <div class="toolbar-actions">
+          <button class="button ghost" id="opsToggleBtn" type="button" data-i18n="operations" aria-expanded="false">Operations</button>
           <button class="button primary" id="taskCreateBtn" type="button" data-i18n="taskCreate">Task 추가</button>
           <button class="button ghost" id="workflowBtn" type="button" data-i18n="workflowCreate">Workflow 생성</button>
           <button class="button ghost" id="bulkBtn" type="button" data-i18n="bulkCreate">일괄 추가</button>
@@ -65,6 +66,7 @@
       </section>
 
       <section id="kpiRow" class="kpi-row" aria-label="board stats"></section>
+      <section id="opsPanel" class="ops-panel" aria-label="operations" hidden></section>
       <section id="board" class="board" aria-label="kanban board"></section>
     </main>
   </div>
@@ -161,6 +163,6 @@ Task two"></textarea>
     </form>
   </dialog>
 
-  <script type="module" src="/static/app.js?v=20260508-01"></script>
+  <script type="module" src="/static/app.js?v=20260508-02"></script>
 </body>
 </html>

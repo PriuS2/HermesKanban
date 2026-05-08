@@ -23,6 +23,7 @@ from .service_status import service_status
 from .ui_registry import registry
 from .config import get_settings
 from . import app_update, workflow_drafts, workflow_planner, workflows
+from .operations import build_operations_summary
 
 router = APIRouter(prefix="/api")
 
@@ -1490,6 +1491,16 @@ def assignees(board: Optional[str] = Query(None)) -> dict[str, Any]:
     conn = kanban_db.connect(board=selected)
     try:
         return {"assignees": kanban_db.known_assignees(conn)}
+    finally:
+        conn.close()
+
+
+@router.get("/ops/summary")
+def ops_summary(board: Optional[str] = Query(None), recent_limit: int = Query(20, ge=1, le=100)) -> dict[str, Any]:
+    selected = _resolve_board(board)
+    conn = kanban_db.connect(board=selected)
+    try:
+        return build_operations_summary(conn, board=selected, recent_limit=recent_limit)
     finally:
         conn.close()
 
